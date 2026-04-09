@@ -3,116 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>제휴 문의</title>
+  <title>두들리아트 체험수업 신청</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .form-container {
+      font-family: 'Noto Sans KR', sans-serif;
       background: #fff;
-      border-radius: 12px;
-      padding: 40px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      color: #111;
+      min-height: 100vh;
     }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
+
+    header {
+      text-align: center;
+      padding: 48px 20px 32px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
       color: #111;
     }
-    p.subtitle {
-      font-size: 0.9rem;
+    .logo span { color: #ff6b35; }
+
+    .hero {
+      text-align: center;
+      padding: 52px 20px 40px;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: #fff5f0;
+      color: #ff6b35;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 0.95rem;
       color: #666;
-      margin-bottom: 28px;
+      line-height: 1.7;
     }
-    .field {
-      margin-bottom: 18px;
+
+    .form-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
     }
+
+    .form-card {
+      border: 1px solid #ebebeb;
+      border-radius: 16px;
+      padding: 36px 32px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .field { margin-bottom: 20px; }
+
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      color: #333;
-      margin-bottom: 6px;
+      color: #444;
+      margin-bottom: 7px;
     }
-    input, textarea, select {
+    label .req { color: #ff6b35; margin-left: 2px; }
+
+    input, select, textarea {
       width: 100%;
-      padding: 10px 14px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 0.95rem;
+      padding: 12px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.93rem;
+      font-family: 'Noto Sans KR', sans-serif;
       color: #111;
-      transition: border-color 0.2s;
       background: #fafafa;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-appearance: none;
     }
-    input:focus, textarea:focus, select:focus {
+    input::placeholder, textarea::placeholder { color: #bbb; }
+    input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: #4f46e5;
+      border-color: #ff6b35;
       background: #fff;
     }
-    textarea { resize: vertical; min-height: 120px; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    textarea { resize: none; height: 90px; }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 8px 0 24px;
+    }
+
     button[type="submit"] {
       width: 100%;
-      padding: 12px;
-      background: #4f46e5;
+      padding: 15px;
+      background: #111;
       color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 10px;
+      font-size: 0.97rem;
       font-weight: 600;
+      font-family: 'Noto Sans KR', sans-serif;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.2s;
+      transition: background 0.15s, transform 0.1s;
     }
-    button[type="submit"]:hover { background: #4338ca; }
+    button[type="submit"]:hover { background: #333; }
+    button[type="submit"]:active { transform: scale(0.99); }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .info-strip {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 28px 20px;
+      border-top: 1px solid #f0f0f0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .info-item { text-align: center; }
+    .info-item .ilabel { font-size: 0.72rem; color: #aaa; margin-bottom: 4px; }
+    .info-item .ivalue { font-size: 0.88rem; font-weight: 600; color: #333; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: #ccc;
+      border-top: 1px solid #f5f5f5;
+    }
+
+    @media (max-width: 400px) {
+      .form-card { padding: 28px 20px; }
+      .hero h1 { font-size: 1.6rem; }
+      .row-2 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h1>제휴 문의</h1>
-    <p class="subtitle">파트너십 및 제휴 관련 문의를 남겨주시면 빠르게 답변드리겠습니다.</p>
 
-    <form action="https://formspree.io/f/mjgpdgva" method="POST">
-      <div class="field">
-        <label for="company">회사명 / 기관명</label>
-        <input type="text" id="company" name="company" placeholder="예) 홍길동 주식회사" required>
-      </div>
-      <div class="field">
-        <label for="name">담당자 이름</label>
-        <input type="text" id="name" name="name" placeholder="이름을 입력해주세요" required>
-      </div>
-      <div class="field">
-        <label for="email">이메일</label>
-        <input type="email" id="email" name="email" placeholder="example@company.com" required>
-      </div>
-      <div class="field">
-        <label for="phone">연락처</label>
-        <input type="tel" id="phone" name="phone" placeholder="010-0000-0000">
-      </div>
-      <div class="field">
-        <label for="type">제휴 유형</label>
-        <select id="type" name="type">
-          <option value="">선택해주세요</option>
-          <option value="마케팅">마케팅 제휴</option>
-          <option value="콘텐츠">콘텐츠 제휴</option>
-          <option value="기술">기술 제휴</option>
-          <option value="기타">기타</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="message">문의 내용</label>
-        <textarea id="message" name="message" placeholder="제휴 목적 및 내용을 간략히 설명해주세요" required></textarea>
-      </div>
-      <button type="submit">문의 보내기</button>
-    </form>
+  <header>
+    <div class="logo">두들리<span>아트</span></div>
+  </header>
+
+  <div class="hero">
+    <div class="badge">✏️ 무료 체험수업</div>
+    <h1>나만의 그림을<br>시작해보세요</h1>
+    <p>아래 신청서를 작성하시면<br>담당자가 직접 연락드립니다.</p>
   </div>
+
+  <div class="form-wrap">
+    <div class="form-card">
+      <form action="https://formspree.io/f/mjgpdgva" method="POST">
+
+        <div class="section-label">학생 정보</div>
+
+        <div class="field">
+          <label>이름 <span class="req">*</span></label>
+          <input type="text" name="name" placeholder="홍길동" required>
+        </div>
+
+        <div class="row-2">
+          <div class="field">
+            <label>학교</label>
+            <input type="text" name="school" placeholder="○○초등학교">
+          </div>
+          <div class="field">
+            <label>학년</label>
+            <select name="grade">
+              <option value="">선택</option>
+              <option>초1</option><option>초2</option><option>초3</option>
+              <option>초4</option><option>초5</option><option>초6</option>
+              <option>중1</option><option>중2</option><option>중3</option>
+              <option>고1</option><option>고2</option><option>고3</option>
+              <option>성인</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">연락처</div>
+
+        <div class="field">
+          <label>학생 연락처</label>
+          <input type="tel" name="student_phone" placeholder="010-0000-0000">
+        </div>
+        <div class="field">
+          <label>보호자 연락처 <span class="req">*</span></label>
+          <input type="tel" name="parent_phone" placeholder="010-0000-0000" required>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">희망 일정</div>
+
+        <div class="row-2">
+          <div class="field">
+            <label>희망 날짜</label>
+            <input type="date" name="preferred_date">
+          </div>
+          <div class="field">
+            <label>희망 시간</label>
+            <select name="preferred_time">
+              <option value="">선택</option>
+              <option>오전 (10~12시)</option>
+              <option>오후 (13~15시)</option>
+              <option>오후 (15~17시)</option>
+              <option>저녁 (17~19시)</option>
+              <option>저녁 (19~21시)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>문의 사항</label>
+          <textarea name="message" placeholder="궁금한 점이나 전달 사항을 남겨주세요."></textarea>
+        </div>
+
+        <button type="submit">체험수업 신청하기 →</button>
+      </form>
+
+      <p class="form-note">신청 후 1~2 영업일 내 연락드립니다.</p>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-item">
+      <div class="ilabel">운영시간</div>
+      <div class="ivalue">평일 10 – 21시</div>
+    </div>
+    <div class="info-item">
+      <div class="ilabel">체험수업</div>
+      <div class="ivalue">무료</div>
+    </div>
+    <div class="info-item">
+      <div class="ilabel">문의</div>
+      <div class="ivalue">카카오톡</div>
+    </div>
+  </div>
+
+  <footer>© 2026 두들리아트. All rights reserved.</footer>
+
 </body>
 </html>
