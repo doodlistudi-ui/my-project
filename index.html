@@ -18,40 +18,28 @@
 
     header {
       text-align: center;
-      padding: 48px 20px 32px;
+      padding: 40px 20px 28px;
       border-bottom: 1px solid #f0f0f0;
     }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #111;
+    .logo img {
+      height: 36px;
+      width: auto;
     }
-    .logo span { color: #ff6b35; }
 
     .hero {
       text-align: center;
-      padding: 52px 20px 40px;
-    }
-    .hero .badge {
-      display: inline-block;
-      background: #fff5f0;
-      color: #ff6b35;
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 16px;
+      padding: 48px 20px 36px;
     }
     .hero h1 {
-      font-size: 2rem;
+      font-size: 1.7rem;
       font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -1px;
+      line-height: 1.4;
+      letter-spacing: -0.8px;
       margin-bottom: 12px;
+      word-break: keep-all;
     }
     .hero p {
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       color: #666;
       line-height: 1.7;
     }
@@ -175,7 +163,7 @@
 
     @media (max-width: 400px) {
       .form-card { padding: 28px 20px; }
-      .hero h1 { font-size: 1.6rem; }
+      .hero h1 { font-size: 1.4rem; }
       .row-2 { grid-template-columns: 1fr; }
     }
   </style>
@@ -183,12 +171,13 @@
 <body>
 
   <header>
-    <div class="logo">두들리<span>아트</span></div>
+    <div class="logo">
+      <img src="logo.png" alt="두들리아트">
+    </div>
   </header>
 
   <div class="hero">
-    <div class="badge">✏️ 무료 체험수업</div>
-    <h1>나만의 그림을<br>시작해보세요</h1>
+    <h1>아이들의 상상이<br>현실이 되는 미술클래스</h1>
     <p>아래 신청서를 작성하시면<br>담당자가 직접 연락드립니다.</p>
   </div>
 
@@ -212,11 +201,20 @@
             <label>학년</label>
             <select name="grade">
               <option value="">선택</option>
-              <option>초1</option><option>초2</option><option>초3</option>
-              <option>초4</option><option>초5</option><option>초6</option>
-              <option>중1</option><option>중2</option><option>중3</option>
-              <option>고1</option><option>고2</option><option>고3</option>
-              <option>성인</option>
+              <optgroup label="유치원">
+                <option>유치원 4세</option>
+                <option>유치원 5세</option>
+                <option>유치원 6세</option>
+                <option>유치원 7세</option>
+              </optgroup>
+              <optgroup label="초등학교">
+                <option>초1</option>
+                <option>초2</option>
+                <option>초3</option>
+                <option>초4</option>
+                <option>초5</option>
+                <option>초6</option>
+              </optgroup>
             </select>
           </div>
         </div>
@@ -225,12 +223,8 @@
         <div class="section-label">연락처</div>
 
         <div class="field">
-          <label>학생 연락처</label>
-          <input type="tel" name="student_phone" placeholder="010-0000-0000">
-        </div>
-        <div class="field">
-          <label>보호자 연락처 <span class="req">*</span></label>
-          <input type="tel" name="parent_phone" placeholder="010-0000-0000" required>
+          <label>연락처 <span class="req">*</span></label>
+          <input type="tel" name="phone" placeholder="010-0000-0000" required>
         </div>
 
         <hr class="divider">
@@ -245,11 +239,12 @@
             <label>희망 시간</label>
             <select name="preferred_time">
               <option value="">선택</option>
-              <option>오전 (10~12시)</option>
-              <option>오후 (13~15시)</option>
-              <option>오후 (15~17시)</option>
-              <option>저녁 (17~19시)</option>
-              <option>저녁 (19~21시)</option>
+              <option>12:00 – 13:00</option>
+              <option>13:00 – 14:00</option>
+              <option>14:00 – 15:00</option>
+              <option>15:00 – 16:00</option>
+              <option>16:00 – 17:00</option>
+              <option>17:00 – 18:00</option>
             </select>
           </div>
         </div>
@@ -269,11 +264,11 @@
   <div class="info-strip">
     <div class="info-item">
       <div class="ilabel">운영시간</div>
-      <div class="ivalue">평일 10 – 21시</div>
+      <div class="ivalue">평일 12 – 18시</div>
     </div>
     <div class="info-item">
-      <div class="ilabel">체험수업</div>
-      <div class="ivalue">무료</div>
+      <div class="ilabel">대상</div>
+      <div class="ivalue">유치원 ~ 초등</div>
     </div>
     <div class="info-item">
       <div class="ilabel">문의</div>
