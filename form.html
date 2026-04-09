@@ -8,92 +8,183 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background: #fff;
       color: #111;
+      max-width: 480px;
+      margin: 0 auto;
       min-height: 100vh;
     }
 
     header {
-      text-align: center;
-      padding: 40px 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
       border-bottom: 1px solid #f0f0f0;
+      position: relative;
     }
-    .logo img {
-      height: 36px;
-      width: auto;
+    .back-btn {
+      position: absolute;
+      left: 16px;
+      font-size: 1.4rem;
+      color: #555;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    header h2 { font-size: 1rem; font-weight: 700; }
+    .home-btn {
+      position: absolute;
+      right: 16px;
+      font-size: 1.2rem;
+      text-decoration: none;
     }
 
-    .hero {
-      text-align: center;
-      padding: 48px 20px 36px;
-    }
-    .hero h1 {
-      font-size: 1.7rem;
+    .step { display: none; padding: 24px 20px 100px; }
+    .step.active { display: block; }
+
+    .section-title {
+      font-size: 1.05rem;
       font-weight: 700;
-      line-height: 1.4;
-      letter-spacing: -0.8px;
       margin-bottom: 12px;
-      word-break: keep-all;
-    }
-    .hero p {
-      font-size: 0.93rem;
-      color: #666;
-      line-height: 1.7;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 20px;
     }
 
-    .form-wrap {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 0 20px 80px;
+    /* 달력 */
+    .cal-nav {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 2px;
     }
-
-    .form-card {
-      border: 1px solid #ebebeb;
-      border-radius: 16px;
-      padding: 36px 32px;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #999;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .field { margin-bottom: 20px; }
-
-    label {
-      display: block;
-      font-size: 0.82rem;
+    .cal-month-btn {
+      font-size: 0.92rem;
       font-weight: 600;
-      color: #444;
-      margin-bottom: 7px;
+      color: #bbb;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 4px 2px;
+      cursor: pointer;
+      white-space: nowrap;
     }
-    label .req { color: #ff6b35; margin-left: 2px; }
+    .cal-month-btn.active { color: #111; border-bottom-color: #111; }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 14px;
+    .cal-grid { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+    .cal-grid th {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      padding: 6px 0;
+      font-weight: 500;
+    }
+    .cal-grid th.sun { color: #e84040; }
+    .cal-grid th.sat { color: #4f80e1; }
+    .cal-grid td { text-align: center; padding: 5px 0; }
+    .cal-day {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .cal-day:hover:not(.past):not(.empty) { border-color: #ccc; }
+    .cal-day.sun { color: #e84040; }
+    .cal-day.sat { color: #4f80e1; }
+    .cal-day.today { border-color: #4f80e1; color: #4f80e1; font-weight: 700; }
+    .cal-day.selected { background: #4f80e1; color: #fff !important; border-color: #4f80e1; font-weight: 700; }
+    .cal-day.past { color: #ddd; cursor: default; }
+
+    /* 시간 */
+    .time-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .time-btn {
+      padding: 15px 10px;
       border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 0.88rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+      text-align: center;
+      color: #333;
+      transition: all 0.15s;
+    }
+    .time-btn:hover { border-color: #4f80e1; color: #4f80e1; }
+    .time-btn.selected { border-color: #4f80e1; color: #4f80e1; font-weight: 700; background: #f0f4ff; }
+
+    /* 하단 고정 버튼 */
+    .bottom-btn {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      padding: 14px 20px;
+      background: #fff;
+      border-top: 1px solid #f0f0f0;
+      z-index: 100;
+    }
+    .bottom-btn button {
+      width: 100%;
+      padding: 15px;
+      background: #111;
+      color: #fff;
+      border: none;
       border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .bottom-btn button:disabled { background: #ccc; cursor: default; }
+    .bottom-btn button:not(:disabled):hover { background: #333; }
+
+    /* 예약 요약 */
+    .booking-summary {
+      background: #f7f9ff;
+      border: 1px solid #dce6ff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+    }
+    .bs-name { font-size: 0.92rem; font-weight: 700; margin-bottom: 3px; }
+    .bs-detail { font-size: 0.83rem; color: #555; }
+
+    /* 필드 */
+    .field { margin-bottom: 20px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 7px; }
+    input, select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 0.93rem;
       font-family: 'Noto Sans KR', sans-serif;
       color: #111;
       background: #fafafa;
-      transition: border-color 0.15s, background 0.15s;
       -webkit-appearance: none;
+      transition: border-color 0.15s;
     }
-    input::placeholder, textarea::placeholder { color: #bbb; }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #ff6b35;
-      background: #fff;
-    }
+    input:focus, select:focus { outline: none; border-color: #4f80e1; background: #fff; }
+    input::placeholder { color: #bbb; }
     select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -101,182 +192,265 @@
       padding-right: 36px;
       cursor: pointer;
     }
-    textarea { resize: none; height: 90px; }
 
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    hr.divider {
-      border: none;
-      border-top: 1px solid #f0f0f0;
-      margin: 8px 0 24px;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      padding: 15px;
-      background: #111;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.97rem;
-      font-weight: 600;
-      font-family: 'Noto Sans KR', sans-serif;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: background 0.15s, transform 0.1s;
-    }
-    button[type="submit"]:hover { background: #333; }
-    button[type="submit"]:active { transform: scale(0.99); }
-
-    .form-note {
-      text-align: center;
-      font-size: 0.78rem;
-      color: #aaa;
-      margin-top: 14px;
-      line-height: 1.6;
-    }
-
-    .info-strip {
+    /* 개인정보 동의 */
+    .privacy-section { margin-top: 28px; border-top: 1px solid #eee; padding-top: 20px; }
+    .privacy-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; }
+    .agree-all {
       display: flex;
-      justify-content: center;
-      gap: 32px;
-      padding: 28px 20px;
-      border-top: 1px solid #f0f0f0;
-      max-width: 480px;
-      margin: 0 auto;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
     }
-    .info-item { text-align: center; }
-    .info-item .ilabel { font-size: 0.72rem; color: #aaa; margin-bottom: 4px; }
-    .info-item .ivalue { font-size: 0.88rem; font-weight: 600; color: #333; }
+    .agree-all span { font-size: 0.88rem; font-weight: 600; }
+    .agree-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 4px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
+    .agree-item:last-child { border-bottom: none; }
+    .agree-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+    .agree-left span { font-size: 0.82rem; color: #333; line-height: 1.5; }
+    .req-tag { color: #e84040; font-weight: 600; }
+    .opt-tag { color: #888; }
+    .view-btn { font-size: 0.75rem; color: #aaa; white-space: nowrap; padding-left: 8px; text-decoration: underline; }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.75rem;
-      color: #ccc;
-      border-top: 1px solid #f5f5f5;
+    .custom-check {
+      width: 20px; height: 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: #fff;
+      transition: all 0.15s;
     }
-
-    @media (max-width: 400px) {
-      .form-card { padding: 28px 20px; }
-      .hero h1 { font-size: 1.4rem; }
-      .row-2 { grid-template-columns: 1fr; }
-    }
+    .custom-check.checked { background: #4f80e1; border-color: #4f80e1; }
+    .custom-check.checked::after { content: '✓'; color: #fff; font-size: 0.72rem; font-weight: 700; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="두들리아트">
-    </div>
-  </header>
+<header>
+  <button class="back-btn" onclick="goBack()">‹</button>
+  <h2>두들리아트</h2>
+  <a href="index.html" class="home-btn">🏠</a>
+</header>
 
-  <div class="hero">
-    <h1>아이들의 상상이<br>현실이 되는 미술클래스</h1>
-    <p>아래 신청서를 작성하시면<br>담당자가 직접 연락드립니다.</p>
+<!-- STEP 1: 날짜 & 시간 -->
+<div class="step active" id="step1">
+  <div class="section-title">날짜 선택</div>
+  <div class="cal-nav" id="calNav"></div>
+  <table class="cal-grid">
+    <thead>
+      <tr>
+        <th class="sun">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th class="sat">토</th>
+      </tr>
+    </thead>
+    <tbody id="calBody"></tbody>
+  </table>
+
+  <div class="section-title">시간 선택</div>
+  <div class="time-grid" id="timeGrid"></div>
+</div>
+
+<!-- STEP 2: 학생 정보 + 동의 -->
+<div class="step" id="step2">
+  <div class="booking-summary">
+    <div class="bs-name">두들리아트</div>
+    <div class="bs-detail" id="summaryText"></div>
   </div>
 
-  <div class="form-wrap">
-    <div class="form-card">
-      <form action="https://formspree.io/f/mjgpdgva" method="POST">
+  <form id="mainForm" action="https://formspree.io/f/mjgpdgva" method="POST">
+    <input type="hidden" name="예약날짜" id="f_date">
+    <input type="hidden" name="예약시간" id="f_time">
+    <input type="hidden" name="개인정보동의" id="f_privacy">
+    <input type="hidden" name="마케팅동의" id="f_marketing">
 
-        <div class="section-label">학생 정보</div>
-
-        <div class="field">
-          <label>이름 <span class="req">*</span></label>
-          <input type="text" name="name" placeholder="홍길동" required>
-        </div>
-
-        <div class="row-2">
-          <div class="field">
-            <label>소속</label>
-            <input type="text" name="school" placeholder="고척초">
-          </div>
-          <div class="field">
-            <label>학년</label>
-            <select name="grade">
-              <option value="">선택</option>
-              <optgroup label="유치원">
-                <option>유치원 4세</option>
-                <option>유치원 5세</option>
-                <option>유치원 6세</option>
-                <option>유치원 7세</option>
-              </optgroup>
-              <optgroup label="초등학교">
-                <option>초1</option>
-                <option>초2</option>
-                <option>초3</option>
-                <option>초4</option>
-                <option>초5</option>
-                <option>초6</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-
-        <hr class="divider">
-        <div class="section-label">연락처</div>
-
-        <div class="field">
-          <label>연락처 <span class="req">*</span></label>
-          <input type="tel" name="phone" placeholder="010-0000-0000" required>
-        </div>
-
-        <hr class="divider">
-        <div class="section-label">희망 일정</div>
-
-        <div class="row-2">
-          <div class="field">
-            <label>희망 날짜</label>
-            <input type="date" name="preferred_date">
-          </div>
-          <div class="field">
-            <label>희망 시간</label>
-            <select name="preferred_time">
-              <option value="">선택</option>
-              <option>12:00 – 13:00</option>
-              <option>13:00 – 14:00</option>
-              <option>14:00 – 15:00</option>
-              <option>15:00 – 16:00</option>
-              <option>16:00 – 17:00</option>
-              <option>17:00 – 18:00</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>문의 사항</label>
-          <textarea name="message" placeholder="궁금한 점이나 전달 사항을 남겨주세요."></textarea>
-        </div>
-
-        <button type="submit">체험수업 신청하기 →</button>
-      </form>
-
-      <p class="form-note">신청 후 1~2 영업일 내 연락드립니다.</p>
+    <div class="field">
+      <label>학생 이름</label>
+      <input type="text" name="이름" placeholder="이름을 입력해 주세요." required>
     </div>
-  </div>
-
-  <div class="info-strip">
-    <div class="info-item">
-      <div class="ilabel">운영시간</div>
-      <div class="ivalue">평일 12 – 18시</div>
+    <div class="field">
+      <label>소속</label>
+      <input type="text" name="소속" placeholder="고척초">
     </div>
-    <div class="info-item">
-      <div class="ilabel">대상</div>
-      <div class="ivalue">유치원 ~ 초등</div>
+    <div class="field">
+      <label>학년</label>
+      <select name="학년" required>
+        <option value="">학년을 선택하세요.</option>
+        <optgroup label="유치원">
+          <option>유치원 4세</option><option>유치원 5세</option>
+          <option>유치원 6세</option><option>유치원 7세</option>
+        </optgroup>
+        <optgroup label="초등학교">
+          <option>초1</option><option>초2</option><option>초3</option>
+          <option>초4</option><option>초5</option><option>초6</option>
+        </optgroup>
+      </select>
     </div>
-    <div class="info-item">
-      <div class="ilabel">문의</div>
-      <div class="ivalue">카카오톡</div>
+    <div class="field">
+      <label>생년월일</label>
+      <input type="text" name="생년월일" placeholder="주민번호 앞 6자리 (예: 200501)" maxlength="6" inputmode="numeric">
     </div>
-  </div>
+    <div class="field">
+      <label>연락처</label>
+      <input type="tel" name="연락처" placeholder="'-' 빼고 입력하세요." required inputmode="numeric">
+    </div>
 
-  <footer>© 2026 두들리아트. All rights reserved.</footer>
+    <div class="privacy-section">
+      <div class="privacy-title">개인정보 수집·이용 동의</div>
+      <div class="agree-all" onclick="toggleAll()">
+        <div class="custom-check" id="checkAll"></div>
+        <span>전체 동의</span>
+      </div>
+      <div class="agree-item" onclick="toggleCheck('c1')">
+        <div class="agree-left">
+          <div class="custom-check" id="c1"></div>
+          <span><span class="req-tag">[필수]</span> 개인정보 수집·이용에 대한 동의</span>
+        </div>
+        <span class="view-btn">보기</span>
+      </div>
+      <div class="agree-item" onclick="toggleCheck('c2')">
+        <div class="agree-left">
+          <div class="custom-check" id="c2"></div>
+          <span><span class="req-tag">[필수]</span> 만 14세 미만 아동 개인정보 수집·이용에 대한 법정 대리인 동의</span>
+        </div>
+        <span class="view-btn">보기</span>
+      </div>
+      <div class="agree-item" onclick="toggleCheck('c3')">
+        <div class="agree-left">
+          <div class="custom-check" id="c3"></div>
+          <span><span class="opt-tag">[선택]</span> 마케팅 및 광고 활용을 위한 개인정보 수집·이용 동의</span>
+        </div>
+        <span class="view-btn">보기</span>
+      </div>
+    </div>
+  </form>
+</div>
 
+<div class="bottom-btn">
+  <button id="nextBtn" disabled onclick="handleNext()">다음</button>
+</div>
+
+<script>
+  const TIMES = ['오후 12시 00분','오후 1시 00분','오후 2시 00분','오후 3시 00분','오후 4시 00분','오후 5시 00분','오후 6시 00분'];
+  let selectedDate = null, selectedTime = null, currentStep = 1, currentMonthIdx = 0;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const months = Array.from({length:4}, (_,i) => new Date(today.getFullYear(), today.getMonth()+i, 1));
+
+  function renderCalNav() {
+    document.getElementById('calNav').innerHTML = months.map((m,i) =>
+      `<button class="cal-month-btn${i===currentMonthIdx?' active':''}" onclick="switchMonth(${i})">${m.getMonth()+1}월</button>`
+    ).join('');
+  }
+
+  function renderCalendar() {
+    const m = months[currentMonthIdx];
+    const year = m.getFullYear(), month = m.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month+1, 0).getDate();
+    let html = '', day = 1, started = false;
+    for (let row = 0; row < 6; row++) {
+      html += '<tr>';
+      for (let col = 0; col < 7; col++) {
+        if (!started && col < firstDay) {
+          html += '<td></td>';
+        } else if (day > lastDate) {
+          html += '<td></td>';
+        } else {
+          started = true;
+          const date = new Date(year, month, day);
+          const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+          const isPast = date < today;
+          const isToday = date.getTime() === today.getTime();
+          const isSel = selectedDate === ds;
+          let cls = 'cal-day';
+          if (isPast) cls += ' past';
+          else if (isSel) cls += ' selected';
+          else if (isToday) cls += ' today';
+          if (col===0) cls += ' sun';
+          if (col===6) cls += ' sat';
+          const click = isPast ? '' : `onclick="selectDate('${ds}')"`;
+          html += `<td><span class="${cls}" ${click}>${String(day).padStart(2,'0')}</span></td>`;
+          day++;
+        }
+      }
+      html += '</tr>';
+      if (day > lastDate) break;
+    }
+    document.getElementById('calBody').innerHTML = html;
+    renderCalNav();
+  }
+
+  function switchMonth(i) { currentMonthIdx = i; renderCalendar(); }
+  function selectDate(ds) { selectedDate = ds; renderCalendar(); checkStep1(); }
+  function selectTime(t) { selectedTime = t; renderTimeGrid(); checkStep1(); }
+
+  function renderTimeGrid() {
+    document.getElementById('timeGrid').innerHTML = TIMES.map(t =>
+      `<button type="button" class="time-btn${selectedTime===t?' selected':''}" onclick="selectTime('${t}')">${t}</button>`
+    ).join('');
+  }
+
+  function checkStep1() {
+    document.getElementById('nextBtn').disabled = !(selectedDate && selectedTime);
+  }
+
+  function handleNext() {
+    if (currentStep === 1) {
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+      document.getElementById('nextBtn').textContent = '신청 완료';
+      document.getElementById('nextBtn').disabled = false;
+      const [y,mo,d] = selectedDate.split('-');
+      document.getElementById('summaryText').textContent = `체험수업 예약 ${y}-${mo}-${d} ${selectedTime}`;
+      document.getElementById('f_date').value = selectedDate;
+      document.getElementById('f_time').value = selectedTime;
+      currentStep = 2;
+    } else {
+      if (!isChecked('c1') || !isChecked('c2')) {
+        alert('필수 개인정보 동의를 체크해주세요.');
+        return;
+      }
+      document.getElementById('f_privacy').value = '동의';
+      document.getElementById('f_marketing').value = isChecked('c3') ? '동의' : '미동의';
+      document.getElementById('mainForm').submit();
+    }
+  }
+
+  function goBack() {
+    if (currentStep === 2) {
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('nextBtn').textContent = '다음';
+      currentStep = 1;
+      checkStep1();
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+
+  function isChecked(id) { return document.getElementById(id).classList.contains('checked'); }
+  function toggleCheck(id) {
+    document.getElementById(id).classList.toggle('checked');
+    const all = ['c1','c2','c3'].every(id => isChecked(id));
+    document.getElementById('checkAll').classList.toggle('checked', all);
+  }
+  function toggleAll() {
+    const allOn = isChecked('checkAll');
+    ['c1','c2','c3','checkAll'].forEach(id => document.getElementById(id).classList.toggle('checked', !allOn));
+  }
+
+  renderCalendar();
+  renderTimeGrid();
+</script>
 </body>
 </html>
