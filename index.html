@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>두들리아트</title>
+  <title>두들리아트 체험수업 예약</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -13,132 +13,264 @@
       font-family: 'Noto Sans KR', sans-serif;
       background: #fff;
       color: #111;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      max-width: 480px;
+      margin: 0 auto;
     }
 
     header {
-      text-align: center;
-      padding: 48px 20px 32px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    .logo img {
-      height: 36px;
-      width: auto;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 44px 20px 32px;
-    }
-    .hero p {
-      font-size: 0.85rem;
-      color: #999;
-      margin-bottom: 6px;
-    }
-    .hero h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .menu {
-      max-width: 480px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-      flex: 1;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 22px 20px;
-      border: 1px solid #ebebeb;
-      border-radius: 14px;
-      margin-bottom: 12px;
-      text-decoration: none;
-      color: #111;
-      transition: background 0.15s, border-color 0.15s;
-      cursor: pointer;
-    }
-    .menu-item:hover {
-      background: #fafafa;
-      border-color: #ddd;
-    }
-    .menu-item:active {
-      background: #f5f5f5;
-    }
-
-    .menu-item-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .menu-icon {
-      width: 42px;
-      height: 42px;
-      background: #f5f5f5;
-      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+    }
+    header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .logo-small {
+      position: absolute;
+      right: 20px;
+    }
+    .logo-small img {
+      height: 22px;
+    }
+
+    .academy-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .academy-name {
+      text-align: center;
+      padding: 24px 20px 20px;
       font-size: 1.2rem;
-      flex-shrink: 0;
+      font-weight: 700;
     }
-    .menu-text .title {
-      font-size: 0.97rem;
+
+    .notice {
+      padding: 0 20px 24px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .notice-title {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .notice-sub {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #e84040;
       font-weight: 600;
-      margin-bottom: 3px;
+      margin-bottom: 20px;
     }
-    .menu-text .desc {
+
+    .notice-item {
+      margin-bottom: 18px;
+    }
+    .notice-item .ntitle {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .notice-item .ncontent {
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.7;
+      padding-left: 4px;
+    }
+    .ncontent .highlight {
+      color: #e84040;
+      font-weight: 600;
+    }
+
+    .info-section {
+      padding: 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+      color: #444;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-icon { flex-shrink: 0; }
+
+    .blog-link {
+      display: block;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #444;
+      border-bottom: 1px solid #f0f0f0;
+      text-decoration: none;
+    }
+    .blog-label {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #111;
+    }
+    .blog-url {
+      color: #1a73e8;
+      text-decoration: underline;
+      word-break: break-all;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 18px 10px;
+      text-decoration: none;
+      color: #444;
+      font-size: 0.8rem;
+      border-right: 1px solid #f0f0f0;
+    }
+    .action-btn:last-child { border-right: none; }
+    .action-btn .icon { font-size: 1.4rem; }
+
+    .cta-wrap {
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .cta-label {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .cta-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 16px;
+      background: #111;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Noto Sans KR', sans-serif;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: #333; }
+
+    .cancel-notice {
+      text-align: center;
+      padding: 16px 20px;
       font-size: 0.78rem;
-      color: #999;
-    }
-    .arrow {
-      color: #ccc;
-      font-size: 1.1rem;
-      flex-shrink: 0;
+      color: #e84040;
+      border-bottom: 1px solid #f0f0f0;
     }
 
     footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.75rem;
-      color: #ccc;
-      border-top: 1px solid #f5f5f5;
+      padding: 24px 20px;
+      font-size: 0.72rem;
+      color: #aaa;
+      line-height: 1.8;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">
+    <h2>체험수업 예약</h2>
+    <div class="logo-small">
       <img src="logo.png" alt="두들리아트">
     </div>
   </header>
 
-  <div class="hero">
-    <p>예약 신청</p>
-    <h1>두들리아트 체험수업 예약</h1>
+  <img class="academy-photo" src="academy.jpg" alt="두들리아트 학원">
+
+  <div class="academy-name">두들리아트</div>
+
+  <div class="notice">
+    <div class="notice-title">■ 체험수업 공지사항 ■</div>
+    <div class="notice-sub">※ 반드시 공지사항 확인 후 체험수업 예약 ※</div>
+
+    <div class="notice-item">
+      <div class="ntitle">▶체험수업 대상</div>
+      <div class="ncontent">4세 ~ 초등학교 6학년</div>
+    </div>
+
+    <div class="notice-item">
+      <div class="ntitle">▶체험수업 소요 시간 및 비용</div>
+      <div class="ncontent">
+        4~7세 : 40~50분 <span class="highlight">(3만원)</span><br>
+        초1~3 : 80분 <span class="highlight">(3만원)</span>
+      </div>
+    </div>
+
+    <div class="notice-item">
+      <div class="ntitle">▶체험수업 신청 방법</div>
+      <div class="ncontent">
+        공지 확인 → 아래 신청 버튼 클릭 → 정보 입력 → 제출<br>
+        <span class="highlight">※ 제출 후 담당자가 직접 연락드립니다</span>
+      </div>
+    </div>
+
+    <div class="notice-item">
+      <div class="ntitle">▶예약 취소 및 변경</div>
+      <div class="ncontent">
+        예약 1일 전 연락 주셔야 일정 변경 가능<br>
+        <span class="highlight">※ 당일 취소 시 환불 불가</span>
+      </div>
+    </div>
+
+    <div class="notice-item">
+      <div class="ntitle">▶주차 안내</div>
+      <div class="ncontent">학원 앞 주차장 이용 가능</div>
+    </div>
   </div>
 
-  <div class="menu">
-    <a href="form.html" class="menu-item">
-      <div class="menu-item-left">
-        <div class="menu-icon">✏️</div>
-        <div class="menu-text">
-          <div class="title">체험수업 신청</div>
-          <div class="desc">무료 체험수업 신청서 작성</div>
-        </div>
-      </div>
-      <div class="arrow">›</div>
+  <div class="info-section">
+    <div class="info-row">
+      <span class="info-icon">📍</span>
+      <span>서울 구로구 중앙로5길 59<br><span style="color:#888;font-size:0.8rem;">티맵에서 "두비두아트" 검색</span></span>
+    </div>
+    <div class="info-row">
+      <span class="info-icon">📞</span>
+      <span>02-2060-1110</span>
+    </div>
+  </div>
+
+  <a href="https://blog.naver.com/dobedo_art" target="_blank" class="blog-link">
+    <div class="blog-label">♥ 두들리아트 블로그 ♥</div>
+    <div class="blog-url">https://blog.naver.com/dobedo_art</div>
+  </a>
+
+  <div class="action-buttons">
+    <a href="tel:02-2060-1110" class="action-btn">
+      <span class="icon">📞</span>전화하기
+    </a>
+    <a href="https://map.naver.com/v5/search/두비두아트" target="_blank" class="action-btn">
+      <span class="icon">🗺️</span>지도보기
     </a>
   </div>
 
-  <footer>© 2026 두들리아트. All rights reserved.</footer>
+  <div class="cta-wrap">
+    <div class="cta-label">공지 확인 후 체험수업 신청하기</div>
+    <a href="form.html" class="cta-btn">체험수업 신청하기 →</a>
+  </div>
+
+  <div class="cancel-notice">* 예약 취소 및 변경은 반드시 학원으로 전화주세요.</div>
+
+  <footer>
+    © 2026 두들리아트. All rights reserved.
+  </footer>
 
 </body>
 </html>
